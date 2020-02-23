@@ -9,19 +9,25 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "transaction")
 public class Transaction {
 
@@ -43,9 +49,13 @@ public class Transaction {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @NotNull
-    @Column(name = "payment_method", nullable = false)
-    private String paymentMethod;
+    @ManyToOne
+    @JsonIgnoreProperties(value = "payment_method")
+    private PaymentMethod paymentMethod;
+
+//    @NotNull
+//    @Column(name = "payment_method", nullable = false)
+//    private String paymentMethod;
 
     @NotNull
     @Column(name = "expense_by", nullable = false)

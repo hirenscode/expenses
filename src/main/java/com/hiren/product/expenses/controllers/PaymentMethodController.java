@@ -11,36 +11,36 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hiren.product.expenses.domains.Transaction;
-import com.hiren.product.expenses.services.TransactionService;
+import com.hiren.product.expenses.domains.PaymentMethod;
+import com.hiren.product.expenses.services.PaymentMethodService;
 
 @RestController
-@RequestMapping("/api/v1/transaction")
-public class TransactionController {
+@RequestMapping("/api/v1/payment-method")
+public class PaymentMethodController {
 
     @Autowired
-    private TransactionService service;
+    private PaymentMethodService service;
 
     @PostMapping
-    public ResponseEntity<?> addTransaction(@RequestBody Transaction transaction) {
-        service.add(transaction);
-        return new ResponseEntity<Transaction>(transaction, HttpStatus.CREATED);
+    public ResponseEntity<?> addPaymentMethod(@RequestBody PaymentMethod paymentMethod) {
+        service.add(paymentMethod);
+        return new ResponseEntity<PaymentMethod>(paymentMethod, HttpStatus.CREATED);
     }
 
     @GetMapping("/all")
-    public Iterable<Transaction> getTransactions() {
+    public Iterable<PaymentMethod> getPaymentMethods() {
         return service.findAll();
     }
 
     @GetMapping("/{id}")
-    public Transaction getTransaction(@PathVariable("id") Long id) {
+    public PaymentMethod getPaymentMethod(@PathVariable("id") Long id) {
         return service.findById(id);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> removeTransaction(@PathVariable("id") Long id) {
-        Transaction transaction = service.findById(id);
-        boolean removed = service.remove(transaction);
+    public ResponseEntity<String> removePaymentMethod(@PathVariable("id") Long id) {
+        PaymentMethod paymentMethod = service.findById(id);
+        boolean removed = service.remove(paymentMethod);
         if (!removed) {
             return new ResponseEntity<>("Cannot be removed, or doesn't exist", HttpStatus.NO_CONTENT);
         }

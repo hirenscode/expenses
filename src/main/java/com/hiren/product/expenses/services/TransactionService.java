@@ -12,7 +12,7 @@ public class TransactionService {
     @Autowired
     private TransactionRepository repository;
 
-    public void addTransaction(Transaction transaction) {
+    public void add(Transaction transaction) {
         repository.save(transaction);
     }
 
