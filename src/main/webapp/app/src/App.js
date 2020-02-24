@@ -1,26 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import ViewAllTransactions from './components/ViewAllTransactions'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div className="container">
+            <nav>
+                <div className="nav-wrapper">
+                    <a href="#" className="brand-logo"> expenses </a>
+                    <ul id="nav-mobile" className="right hide-on-med-and-down">
+                        <li><a href="#"> Add New Transaction </a></li>
+                        <li><a href="#"> Add New Payment Method </a></li>
+                        <li><a href="#"> Something more... </a></li>
+                    </ul>
+                </div>
+            </nav>
+            <div className="row">
+                <ViewAllTransactions/>
+            </div>
+        </div>
+    );
 }
 
 export default App;
