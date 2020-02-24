@@ -1,38 +1,38 @@
 import React, {Component} from "react";
 
-export default class AddTransaction extends Component {
+export default class AddPaymentMethod extends Component {
 
-    addTransaction(event) {
+    addPaymentMethod(event) {
         event.preventDefault();
 
-        let transaction = {
+        let paymentMethod = {
             date: this.refs.date.value,
             amount: this.refs.amount.value,
             description: this.refs.description.value,
-            // paymentMethod: this.refs.paymentMethod.value,
+            paymentMethod: this.refs.paymentMethod.value,
             category: this.refs.category.value,
             expenseBy: this.refs.expenseBy.value
         }
 
-        fetch("http://localhost:8080/api/v1/transaction", {
+        fetch("http://localhost:8080/api/v1/payment-method", {
             method: "POST",
             headers: {
                 "content-type": "application/json"
             },
-            body: JSON.stringify(transaction)
+            body: JSON.stringify(paymentMethod)
         }).then(response => response.json());
 
-        // window.location.reload();
+        window.location.reload();
     }
 
     render() {
         return (
             <div className="row">
-                <form className="col s12" onSubmit={this.addTransaction.bind(this)}>
+                <form className="col s12" onSubmit={this.addPaymentMethod.bind(this)}>
                     <div className="row">
                         <div className="input-field col s6">
                             <i className="material-icons prefix">date_range</i>
-                            <input ref="date" type="text" className="datepicker"/>
+                            <input placeholder="Placeholder" ref="date" type="text" className="datepicker"/>
                             <label htmlFor="date"> Date </label>
                         </div>
                         <div className="input-field col s6">
@@ -43,31 +43,30 @@ export default class AddTransaction extends Component {
                     </div>
                     <div className="row">
                         <div className="input-field col s12">
-                            <i className="material-icons prefix">attach_money</i>
                             <textarea ref="description" className="materialize-textarea"></textarea>
                             <label htmlFor="description"> Description </label>
                         </div>
                     </div>
-                    {/*<div className="row">*/}
-                    {/*    <div className="input-field col s12">*/}
-                    {/*        <select ref="paymentMethod">*/}
-                    {/*            <option value="" disabled selected> Choose a Payment Method</option>*/}
-                    {/*            <option value="1"> BofATravel</option>*/}
-                    {/*            <option value="2"> ChaseSapphire</option>*/}
-                    {/*            <option value="3"> Discover</option>*/}
-                    {/*        </select>*/}
-                    {/*        <label> <i className="material-icons prefix">credit_card</i> Payment Method </label>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
+                    <div className="row">
+                        <div className="input-field col s12">
+                            <select ref="paymentMethod">
+                                <option value="" disabled selected> Choose a Payment Method</option>
+                                <option value="1"> BofATravel</option>
+                                <option value="2"> ChaseSapphire</option>
+                                <option value="3"> Discover</option>
+                            </select>
+                            <label> <i className="material-icons prefix">credit_card</i> Payment Method </label>
+                        </div>
+                    </div>
                     <div className="row">
                         <div className="input-field col s6">
                             <i className="material-icons prefix">library_add</i>
-                            <input ref="category" type="text" className="validate"/>
+                            <input id="" type="text" className="validate"/>
                             <label htmlFor="category"> Category </label>
                         </div>
                         <div className="input-field col s6">
                             <i className="material-icons prefix">library_add</i>
-                            <input ref="expenseBy" type="text" className="validate"/>
+                            <input id="expenseBy" type="text" className="validate"/>
                             <label htmlFor="expenseBy"> Expense By </label>
                         </div>
                     </div>

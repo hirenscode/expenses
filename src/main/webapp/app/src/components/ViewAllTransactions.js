@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import Transaction from './Transaction'
+import {Link} from "react-router-dom";
 
 export default class ViewAllTransactions extends Component {
     constructor(props) {
@@ -25,9 +26,9 @@ export default class ViewAllTransactions extends Component {
                         // </ul>
                     ))
                 }
-                <a className="btn-floating btn-large waves-effect waves-light red">
+                <Link className="btn-floating btn-large waves-effect waves-light red" to="/add-transaction">
                     <i className="material-icons"> add </i>
-                </a>
+                </Link>
             </div>
 
         )
