@@ -1,33 +1,58 @@
 import React, {Component} from "react";
+import PaymentMethodsDropDown from "./PaymentMethodsDropDown";
+import {addTransaction} from "../services/TransactionService";
+import {getAllPaymentMethods} from "../services/PaymentMethodService";
 
 export default class AddTransaction extends Component {
 
     addTransaction(event) {
         event.preventDefault();
 
+        let selectedPaymentMethod = Object.assign(
+            {},
+            this._paymentMethodDD.getData()
+        );
+
+        console.log(`Add Transaction Selected Payment Method: ${selectedPaymentMethod}`)
+
         let transaction = {
-            date: this.refs.date.value,
+            date: new Date(this.refs.date.value),
             amount: this.refs.amount.value,
             description: this.refs.description.value,
-            // paymentMethod: this.refs.paymentMethod.value,
+            paymentMethod: selectedPaymentMethod,
             category: this.refs.category.value,
             expenseBy: this.refs.expenseBy.value
         }
 
-        fetch("http://localhost:8080/api/v1/transaction", {
-            method: "POST",
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify(transaction)
-        }).then(response => response.json());
+        let addedResponse = addTransaction(transaction);
+        addedResponse.then(
+            res => {
+                let message = "[empty]";
+                if (res.status >= 200) {
+                    message = "Record Added Successfully!"
 
+                } else {
+                    message = `There was a problem adding record with status ${res.status}`;
+                }
+                document.getElementById("message").innerText = message;
+                document.getElementById("message").classList.remove("hide");
+            }
+        );
         // window.location.reload();
+    }
+
+    hideMessage() {
+        if (!document.getElementById("message").classList.contains("hide")) {
+            document.getElementById("message").classList.add("hide");
+        }
     }
 
     render() {
         return (
             <div className="row">
+                <div className="input-field col s12">
+                    <div className="card-panel teal lighten-2 z-depth-5 hide" id="message" onClick={this.hideMessage}/>
+                </div>
                 <form className="col s12" onSubmit={this.addTransaction.bind(this)}>
                     <div className="row">
                         <div className="input-field col s6">
@@ -44,21 +69,19 @@ export default class AddTransaction extends Component {
                     <div className="row">
                         <div className="input-field col s12">
                             <i className="material-icons prefix">attach_money</i>
-                            <textarea ref="description" className="materialize-textarea"></textarea>
+                            <textarea ref="description" className="materialize-textarea"/>
                             <label htmlFor="description"> Description </label>
                         </div>
                     </div>
-                    {/*<div className="row">*/}
-                    {/*    <div className="input-field col s12">*/}
-                    {/*        <select ref="paymentMethod">*/}
-                    {/*            <option value="" disabled selected> Choose a Payment Method</option>*/}
-                    {/*            <option value="1"> BofATravel</option>*/}
-                    {/*            <option value="2"> ChaseSapphire</option>*/}
-                    {/*            <option value="3"> Discover</option>*/}
-                    {/*        </select>*/}
-                    {/*        <label> <i className="material-icons prefix">credit_card</i> Payment Method </label>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
+                    <div className="row">
+                        <div className="input-field col s1">
+                            <label> <i className="material-icons prefix">credit_card</i> </label>
+                        </div>
+                        <div className="input-field col s11">
+                            <PaymentMethodsDropDown ref={(ref) => this._paymentMethodDD = ref}
+                                                    paymentMethods={getAllPaymentMethods}/>
+                        </div>
+                    </div>
                     <div className="row">
                         <div className="input-field col s6">
                             <i className="material-icons prefix">library_add</i>
@@ -80,5 +103,4 @@ export default class AddTransaction extends Component {
             </div>
         );
     }
-
 }

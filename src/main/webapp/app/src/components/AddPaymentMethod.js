@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import {addPaymentMethod} from "../services/PaymentMethodService";
 
 export default class AddPaymentMethod extends Component {
 
@@ -6,68 +7,49 @@ export default class AddPaymentMethod extends Component {
         event.preventDefault();
 
         let paymentMethod = {
-            date: this.refs.date.value,
-            amount: this.refs.amount.value,
-            description: this.refs.description.value,
-            paymentMethod: this.refs.paymentMethod.value,
-            category: this.refs.category.value,
-            expenseBy: this.refs.expenseBy.value
+            bankName: this.refs.bankName.value,
+            userIdentifiedName: this.refs.userIdentifiedName.value,
+            accountNumber: this.refs.accountNumber.value
         }
 
-        fetch("http://localhost:8080/api/v1/payment-method", {
-            method: "POST",
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify(paymentMethod)
-        }).then(response => response.json());
+        let addedResponse = addPaymentMethod(paymentMethod);
+        addedResponse.then(
+            res => {
+                let message = "[empty]";
+                if (res.status >= 200) {
+                    message = "Record Added Successfully!"
 
-        window.location.reload();
+                } else {
+                    message = `There was a problem adding record with status ${res.status}`;
+                }
+                document.getElementById("message").innerText = message;
+                document.getElementById("message").classList.remove("hide");
+            }
+        );
+
     }
 
     render() {
         return (
             <div className="row">
+                <div className="input-field col s12">
+                    <div className="card-panel teal lighten-2 z-depth-5 hide" id="message"/>
+                </div>
                 <form className="col s12" onSubmit={this.addPaymentMethod.bind(this)}>
                     <div className="row">
                         <div className="input-field col s6">
-                            <i className="material-icons prefix">date_range</i>
-                            <input placeholder="Placeholder" ref="date" type="text" className="datepicker"/>
-                            <label htmlFor="date"> Date </label>
+                            <input ref="bankName" type="text" className="validate"/>
+                            <label htmlFor="bankName"> Bank Name </label>
                         </div>
                         <div className="input-field col s6">
-                            <i className="material-icons prefix">attach_money</i>
-                            <input ref="amount" type="text" className="validate"/>
-                            <label htmlFor="amount"> Amount </label>
+                            <input ref="userIdentifiedName" type="text" className="validate"/>
+                            <label htmlFor="userIdentifiedName"> What do you want to call it? </label>
                         </div>
                     </div>
                     <div className="row">
                         <div className="input-field col s12">
-                            <textarea ref="description" className="materialize-textarea"></textarea>
-                            <label htmlFor="description"> Description </label>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="input-field col s12">
-                            <select ref="paymentMethod">
-                                <option value="" disabled selected> Choose a Payment Method</option>
-                                <option value="1"> BofATravel</option>
-                                <option value="2"> ChaseSapphire</option>
-                                <option value="3"> Discover</option>
-                            </select>
-                            <label> <i className="material-icons prefix">credit_card</i> Payment Method </label>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="input-field col s6">
-                            <i className="material-icons prefix">library_add</i>
-                            <input id="" type="text" className="validate"/>
-                            <label htmlFor="category"> Category </label>
-                        </div>
-                        <div className="input-field col s6">
-                            <i className="material-icons prefix">library_add</i>
-                            <input id="expenseBy" type="text" className="validate"/>
-                            <label htmlFor="expenseBy"> Expense By </label>
+                            <textarea ref="accountNumber" className="materialize-textarea"/>
+                            <label htmlFor="accountNumber"> Account Number </label>
                         </div>
                     </div>
                     <div className="row">

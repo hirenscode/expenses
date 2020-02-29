@@ -1,6 +1,9 @@
 import React, {Component} from "react";
 import Transaction from './Transaction'
 import {Link} from "react-router-dom";
+import {deleteTransactionById, getAllTransactions} from "../services/TransactionService";
+
+let self = undefined;
 
 export default class ViewAllTransactions extends Component {
     constructor(props) {
@@ -8,12 +11,29 @@ export default class ViewAllTransactions extends Component {
         this.state = {
             transactions: []
         }
+        self = this;
     }
 
     componentDidMount() {
-        fetch("http://localhost:8080/api/v1/transaction/all")
+        this.fetchAllTransactions();
+    }
+
+    fetchAllTransactions() {
+        getAllTransactions()
             .then(response => response.json())
             .then(data => this.setState({transactions: data}))
+    }
+
+    deleteTransaction(event) {
+        console.log(event.target.dataset.id);
+        let id = event.target.dataset.id;
+        deleteTransactionById(id).then(
+            res => {
+                if (res.status >= 200) {
+                    self.fetchAllTransactions();
+                }
+            }
+        )
     }
 
     render() {
@@ -22,8 +42,15 @@ export default class ViewAllTransactions extends Component {
                 {
                     this.state.transactions.map((transaction) => (
                         // <ul className="collection">
-                        <Transaction key={transaction.id} item={transaction}/>
+                        <div className="row">
+                            <Transaction key={transaction.id} item={transaction}/>
+                            <div className="card-action">
+                                <a className="waves-effect waves-light btn" data-id={transaction.id}
+                                   onClick={this.deleteTransaction}><i className="material-icons left">delete</i>Delete</a>
+                            </div>
+                        </div>
                         // </ul>
+
                     ))
                 }
                 <Link className="btn-floating btn-large waves-effect waves-light red" to="/add-transaction">
