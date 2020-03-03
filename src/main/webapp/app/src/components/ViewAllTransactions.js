@@ -22,6 +22,10 @@ export default class ViewAllTransactions extends Component {
         getAllTransactions()
             .then(response => response.json())
             .then(data => this.setState({transactions: data}))
+            .catch(reason => {
+                console.log(reason);
+                this.state.transactions = [];
+            })
     }
 
     deleteTransaction(event) {
@@ -40,7 +44,11 @@ export default class ViewAllTransactions extends Component {
         return (
             <div className="row">
                 {
-                    this.state.transactions.map((transaction) => (
+                    this.state.transactions === undefined || this.state.transactions.length === 0 ? (
+                        <div className="row">
+                            <span className="card-panel teal lighten-2 z-depth-5 hide"> No Transactions to display currently </span>
+                        </div>
+                    ) : this.state.transactions.map((transaction) => (
                         // <ul className="collection">
                         <div className="row">
                             <Transaction key={transaction.id} item={transaction}/>
@@ -57,8 +65,6 @@ export default class ViewAllTransactions extends Component {
                     <i className="material-icons"> add </i>
                 </Link>
             </div>
-
-        )
-            ;
+        );
     }
 }
