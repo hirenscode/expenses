@@ -47,6 +47,7 @@ export default class ViewAllTransactions extends Component {
                     this.state.transactions === undefined || this.state.transactions.length === 0 ? (
                         <div className="row">
                             <span className="card-panel teal lighten-2 z-depth-5 hide"> No Transactions to display currently </span>
+                            <span className="card-panel"> {process.env} </span>
                         </div>
                     ) : this.state.transactions.map((transaction) => (
                         // <ul className="collection">
