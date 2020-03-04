@@ -24,7 +24,7 @@ export default class ViewAllTransactions extends Component {
             .then(data => this.setState({transactions: data}))
             .catch(reason => {
                 console.log(reason);
-                this.state.transactions = [];
+                this.setState({transactions: []});
             })
     }
 
@@ -47,7 +47,7 @@ export default class ViewAllTransactions extends Component {
                     this.state.transactions === undefined || this.state.transactions.length === 0 ? (
                         <div className="row">
                             <span className="card-panel teal lighten-2 z-depth-5 hide"> No Transactions to display currently </span>
-                            <span className="card-panel"> {process.env.ENDPOINT} </span>
+                            <span className="card-panel"> {process.env.REACT_APP_ENDPOINT} </span>
                         </div>
                     ) : this.state.transactions.map((transaction) => (
                         // <ul className="collection">
