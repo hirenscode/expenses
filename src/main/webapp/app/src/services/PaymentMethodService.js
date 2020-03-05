@@ -1,8 +1,8 @@
 import {BACKEND_API_PATH} from '../resources/properties';
 
-const PAYMENT_METHOD_ENDPOINT = BACKEND_API_PATH + '/payment-method';
-const ALL_PAYMENT_METHOD_ENDPOINT = PAYMENT_METHOD_ENDPOINT + '/all';
-const GET_PAYMENT_METHOD_BY_ID_ENDPOINT = (id) => PAYMENT_METHOD_ENDPOINT + `/${id}`;
+const PAYMENT_METHOD_ENDPOINT = `${BACKEND_API_PATH}/payment-method`;
+const ALL_PAYMENT_METHOD_ENDPOINT = `${PAYMENT_METHOD_ENDPOINT}/all`;
+const GET_PAYMENT_METHOD_BY_ID_ENDPOINT = (id) => `${PAYMENT_METHOD_ENDPOINT}/${id}`;
 
 export const getAllPaymentMethods = () => {
     const response = fetch(ALL_PAYMENT_METHOD_ENDPOINT, {

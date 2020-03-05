@@ -1,4 +1,6 @@
 export const BACKEND_API_PATH = process.env.REACT_APP_ENDPOINT;
+console.log(`Logging REACT_APP_ENDPOINT ${process.env.REACT_APP_ENDPOINT}`);
+
 const FAKE_BACKEND = true;
 export let IS_BACKEND_HEALTHY = () => {
     if (FAKE_BACKEND) return false;
