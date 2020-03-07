@@ -54,7 +54,7 @@ export default class AddPaymentMethod extends Component {
                     </div>
                     <div className="row">
                         <button className="waves-effect waves-light btn" type="submit" name="action"><i
-                            className="material-icons left">add_box</i> Add New Transaction
+                            className="material-icons left">add_box</i> Add New Payment Method
                         </button>
                     </div>
                 </form>
