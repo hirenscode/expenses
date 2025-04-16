@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "payment_method")
+@Table(name = "payment_method", schema = "public")
 public class PaymentMethod {
 
     @Id

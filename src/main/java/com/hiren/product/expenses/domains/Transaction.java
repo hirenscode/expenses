@@ -29,7 +29,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "transaction")
+@Table(name = "transaction", schema = "public")
 public class Transaction {
 
     @Id
