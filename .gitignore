@@ -44,3 +44,6 @@ buildNumber.properties
 
 ### NPM ###
 .env
+
+### H2 ###
+testdb.mv.db
